@@ -1,11 +1,20 @@
 package main
 
 import (
-	"fmt"
+	"log"
+
 	"diary/backend"
 )
 
 func main() {
-	fmt.Println("Запуск сервера")
-	backend.StartServer()
+	
+	db, err := backend.ConnectDatabase()
+	if err != nil {
+		log.Fatal("Ошибка подключения к базе:", err)
+	}
+
+	log.Println("Дневник занятий запущен!")
+
+	
+	backend.StartServer(db)
 }
