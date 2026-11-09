@@ -2,9 +2,9 @@ package backend
 
 import (
 	"fmt"
-	"time"
-	"strings"
 	"net/mail"
+	"strings"
+	"time"
 )
 
 type User struct {
@@ -15,7 +15,8 @@ type User struct {
 	Role      string    `gorm:"default:student" json:"role"`
 	Password  string    `gorm:"not null" json:"-"`
 }
-func validateUser(username, email, password,role string) error {
+
+func validateUser(username, email, password, role string) error {
 	username = strings.TrimSpace(username)
 	email = strings.TrimSpace(email)
 
@@ -23,17 +24,16 @@ func validateUser(username, email, password,role string) error {
 		return fmt.Errorf("Логин должен сожержать минимум 3 символа!")
 
 	}
-	if _,err := mail.ParseAddress(email); err != nil {
+	if _, err := mail.ParseAddress(email); err != nil {
 		return fmt.Errorf("Неверный формат email!")
 	}
 	if len(password) < 6 {
 		return fmt.Errorf("Пароль должен содержать минимум 6 символов!")
 	}
-	if role != "student" && role != "teacher"{
+	if role != "student" && role != "teacher" {
 		return fmt.Errorf("Роль должна быть либо 'student', либо 'teacher'!")
 	}
 
 	return nil
 
-} 
-
+}
